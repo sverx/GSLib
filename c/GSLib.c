@@ -7,8 +7,8 @@
 #define GSL_NAMETABLE_HIGH_BYTE_START   0x78
 #define GSL_NAMETABLE_HIGH_BYTE_END     0x7F
 #define GSL_NAMETABLE_WIDTH_IN_BYTES    0x40
-#define VDP_CONTROL_PORT				0xBF
-#define VDP_DATA_PORT					0xBE
+#define VDP_CONTROL_PORT                0xBF
+#define VDP_DATA_PORT                   0xBE
 
 // == RAM USAGE
 // Following is stored in scrolltable header.
@@ -53,51 +53,50 @@ unsigned char GSL_RAM[263];
 #pragma disable_warning 85
 #pragma disable_warning 59
 
-void GSL_positionWindow(unsigned int X, unsigned int Y)
+void GSL_positionWindow(unsigned int X, unsigned int Y) __sdcccall(0)
 {
 __asm
-							pop de
-							pop hl
-							pop bc
-							push bc
-							push hl
-							push de
+              pop de
+              pop hl
+              pop bc
+              push bc
+              push hl
+              push de
 
-							call GSL_PositionWindow
+              call GSL_PositionWindow
 
 __endasm;
 }
 
 
 
-unsigned int * GSL_metatileLookup(unsigned int x, unsigned int y)
+unsigned int * GSL_metatileLookup(unsigned int x, unsigned int y) __sdcccall(0)
 {
 __asm
-							pop de
-							pop hl
-							pop bc
-							push bc
-							push hl
-							push de
+              pop de
+              pop hl
+              pop bc
+              push bc
+              push hl
+              push de
 
-							call GSL_MetatileLookup
+              call GSL_MetatileLookup
 __endasm;
 }
 
 
 
-unsigned int GSL_tileLookup(unsigned int x, unsigned int y)
+unsigned int GSL_tileLookup(unsigned int x, unsigned int y) __sdcccall(0)
 {
 __asm
+              pop de
+              pop hl
+              pop bc
+              push bc
+              push hl
+              push de
 
-							pop de
-							pop hl
-							pop bc
-							push bc
-							push hl
-							push de
-
-							call GSL_TileLookup
+              call GSL_TileLookup
 __endasm;
 }
 
@@ -106,31 +105,31 @@ __endasm;
 void GSL_refreshVDP()
 {
 __asm
-							push iy
-							call GSL_refreshVDP
-							pop iy
+              push iy
+              call GSL_refreshVDP
+              pop iy
 __endasm;
 }
 
 
 
-void GSL_scroll(signed char x, signed char y)
+void GSL_scroll(signed char x, signed char y) __sdcccall(0)
 {
 __asm
-							pop bc
-							pop hl
-							push hl
-							push bc
+              pop bc
+              pop hl
+              push hl
+              push bc
 
-							push iy
+              push iy
 
-							ld a, h
-							ld (#GSL_YUpdateRequest), a
-							ld a, l
-							ld (#GSL_XUpdateRequest), a
+              ld a, h
+              ld (#GSL_YUpdateRequest), a
+              ld a, l
+              ld (#GSL_XUpdateRequest), a
 
-							call GSL_ActiveDisplayRoutine
-							pop iy
+              call GSL_ActiveDisplayRoutine
+              pop iy
 
 __endasm;
 }
@@ -140,9 +139,9 @@ __endasm;
 void GSL_VBlank()
 {
 __asm
-							push iy
-							call GSL_VBlankRoutine
-							pop iy
+              push iy
+              call GSL_VBlankRoutine
+              pop iy
 __endasm;
 }
 
@@ -151,112 +150,110 @@ __endasm;
 void GSL_metatileUpdate()
 {
 __asm
-							call GSL_MetatileUpdate
+              call GSL_MetatileUpdate
 __endasm;
 }
 
 
 
-void GSL_metatileUpdateCustom(unsigned int x, unsigned int y, unsigned int offset)
+void GSL_metatileUpdateCustom(unsigned int x, unsigned int y, unsigned int offset) __sdcccall(0)
 {
 __asm
-							pop bc
-							pop hl
-							ld (#GSL_MetatileXBuffer), hl
-							pop hl
-							ld (#GSL_MetatileYBuffer), hl
-							pop hl
-							ld de, (#GSL_Scrolltable)
-							add hl, de
-							ld (#GSL_MetatileLookupBuffer), hl
-							push hl
-							push hl
-							push hl
-							push bc
+              pop bc
+              pop hl
+              ld (#GSL_MetatileXBuffer), hl
+              pop hl
+              ld (#GSL_MetatileYBuffer), hl
+              pop hl
+              ld de, (#GSL_Scrolltable)
+              add hl, de
+              ld (#GSL_MetatileLookupBuffer), hl
+              push hl
+              push hl
+              push hl
+              push bc
 
-							call GSL_MetatileUpdate
+              call GSL_MetatileUpdate
 __endasm;
 }
 
 
 unsigned int GSL_getMapWidthInPixels()
 {
-	return *((unsigned int*)(&GSL_RAM + 6));
+  return *((unsigned int*)(&GSL_RAM + 6));
 }
 
 
 
 unsigned int GSL_getMapHeightInPixels()
 {
-	return *((unsigned int*)(&GSL_RAM + 8));
+  return *((unsigned int*)(&GSL_RAM + 8));
 }
 
 
 
 unsigned int GSL_getMapWidthInMetatiles()
 {
-	return *((unsigned int*)(&GSL_RAM + 2));
+  return *((unsigned int*)(&GSL_RAM + 2));
 }
 
 
 
 unsigned int GSL_getMapHeightInMetatiles()
 {
-	return *((unsigned int*)(&GSL_RAM + 4));
+  return *((unsigned int*)(&GSL_RAM + 4));
 }
 
 
 
 unsigned int GSL_getScrolltableSize()
 {
-	return *((unsigned int*)(&GSL_RAM + 0));
+  return *((unsigned int*)(&GSL_RAM + 0));
 }
 
 
 
 unsigned int GSL_getCurrentX()
 {
-	return *((unsigned int*)(&GSL_RAM + 27));
+  return *((unsigned int*)(&GSL_RAM + 27));
 }
 
 
 
 unsigned int GSL_getCurrentY()
 {
-	return *((unsigned int*)(&GSL_RAM + 29));
+  return *((unsigned int*)(&GSL_RAM + 29));
 }
 
 
 
 unsigned char GSL_getCollisionCount()
 {
-	return *((unsigned char*)(&GSL_RAM + 44));
+  return *((unsigned char*)(&GSL_RAM + 44));
 }
 
 
 unsigned char * GSL_getScrolltableAddress()
 {
-	return *(unsigned char**)(&GSL_RAM + 13);
+  return *(unsigned char**)(&GSL_RAM + 13);
 }
 
 
 
-void GSL_initializeMap(void *scrolltable, void *metatiles)
+void GSL_initializeMap(void *scrolltable, void *metatiles) __sdcccall(0)
 {
 
-__asm						pop de
-							pop hl
-							pop bc
-							push bc
-							push hl
-							push de
+__asm
+              pop de
+              pop hl
+              pop bc
+              push bc
+              push hl
+              push de
 
-							call GSL_InitialiseMap
+              call GSL_InitialiseMap
 
-							jp _Finalise
-
-
-
+              jp _Finalise
 
 
 ; ===============================================================================
@@ -358,9 +355,9 @@ _DivCarry2:                 djnz _DivLoop
                             and #248 ; %11111000
                             rra
                             rra
-							inc a
-							inc a
-							and #63
+              inc a
+              inc a
+              and #63
                             ld e, a
                             add hl, de
 
@@ -375,7 +372,7 @@ _DivCarry2:                 djnz _DivLoop
 
                             ; == Set VDP Fine Scroll Values
                             ld a, (#GSL_X)
-		            neg
+                neg
                             out (#VDP_CONTROL_PORT), a
                             ld a, #136 ; $88
                             out (#VDP_CONTROL_PORT), a
@@ -515,7 +512,7 @@ GSL_TileLookup:             ; == Create offset for within Metatile (which nameta
  * TODO:
  * - Optimizations are possible.
  */
-GSL_refreshVDP:          	; == Set VDP Nametable Pointer
+GSL_refreshVDP:           ; == Set VDP Nametable Pointer
                             ld hl, (#GSL_NametableCurrentPosition)
                             ld (#GSL_NametableUpdateRow), hl
 
@@ -536,7 +533,7 @@ GSL_refreshVDP:          	; == Set VDP Nametable Pointer
 
 
 _RefreshLoop:               ; == Set VDP Pointer at Start of Row
-							di
+              di
                             ld hl, (#GSL_NametableUpdateRow)
                             ld c, #VDP_CONTROL_PORT
                             out (c), l
@@ -558,7 +555,7 @@ _RefreshLoop:               ; == Set VDP Pointer at Start of Row
                             ld (#GSL_Offset), a
                             call _unrollRowForNTUpdate          ; Unroll buffer table column for nametable updates!
 
-							; == Add Offset to Start location in Buffer.
+              ; == Add Offset to Start location in Buffer.
                             ld a, (#GSL_X)
                             rrca
                             rrca
@@ -580,21 +577,21 @@ _RefreshLoop:               ; == Set VDP Pointer at Start of Row
                             ld a, #64
                             sub d
                             and #63 ; %00111111
-							jp nz, _NonAdjustedCount
-							ld a, #64
-_NonAdjustedCount:			ld d, a
+              jp nz, _NonAdjustedCount
+              ld a, #64
+_NonAdjustedCount:      ld d, a
 
                             ; == Write Buffered Data to VDP Nametable
                             ld c, #VDP_DATA_PORT
 _WriteRow1Loop:             outi
                             dec d
                             jp nz, _WriteRow1Loop
-							ei
+              ei
 
 
                             ; == Set VDP Address to Start of Row for Second Write
 _WriteSecondRow:            di
-							ld de, (#GSL_NametableUpdateRow)
+              ld de, (#GSL_NametableUpdateRow)
                             ld c, #VDP_CONTROL_PORT
                             ld a, #192 ; %11000000
                             and e
@@ -607,15 +604,15 @@ _WriteSecondRow:            di
                             and #248 ; %11111000
                             rrca
                             rrca
-							jp z, _PrepForNextLine
-							ld d, a
+              jp z, _PrepForNextLine
+              ld d, a
                             ld c, #VDP_DATA_PORT
 
                             ; == Write Buffered Data to VDP Nametable
 _WriteRow2Loop:             outi
                             dec d
                             jp nz, _WriteRow2Loop
-							ei
+              ei
 
 _PrepForNextLine:
                             ; **** Prep for Next Write.
@@ -1741,16 +1738,16 @@ __endasm;
 
 const unsigned int GSL_LUTColumnUpdate[] =
 {
-	0xFECC, 0xFED7, 0xFEE2, 0xFEED, 0xFEF8, 0xFF03, 0xFF0E, 0xFF19, 0xFF24, 0xFF2F, 0xFF3A, 0xFF45, 0xFF50, 0xFF5B, 0xFF66, 0xFF71,
-	0xFF7C, 0xFF87, 0xFF92, 0xFF9D, 0xFFA8, 0xFFB3, 0xFFBE, 0xFFC9, 0xFFD4, 0xFFDF, 0xFFEA, 0xFFF5, 0x0000, 0xFFF5, 0xFFEA, 0xFFDF,
-	0xFFD4, 0xFFC9, 0xFFBE, 0xFFB3, 0xFFA8, 0xFF9D, 0xFF92, 0xFF87, 0xFF7C, 0xFF71, 0xFF66, 0xFF5B, 0xFF50, 0xFF45, 0xFF3A, 0xFF2F,
-	0xFF24, 0xFF19, 0xFF0E, 0xFF03, 0xFEF8, 0xFEED, 0xFEE2, 0xFED7
+  0xFECC, 0xFED7, 0xFEE2, 0xFEED, 0xFEF8, 0xFF03, 0xFF0E, 0xFF19, 0xFF24, 0xFF2F, 0xFF3A, 0xFF45, 0xFF50, 0xFF5B, 0xFF66, 0xFF71,
+  0xFF7C, 0xFF87, 0xFF92, 0xFF9D, 0xFFA8, 0xFFB3, 0xFFBE, 0xFFC9, 0xFFD4, 0xFFDF, 0xFFEA, 0xFFF5, 0x0000, 0xFFF5, 0xFFEA, 0xFFDF,
+  0xFFD4, 0xFFC9, 0xFFBE, 0xFFB3, 0xFFA8, 0xFF9D, 0xFF92, 0xFF87, 0xFF7C, 0xFF71, 0xFF66, 0xFF5B, 0xFF50, 0xFF45, 0xFF3A, 0xFF2F,
+  0xFF24, 0xFF19, 0xFF0E, 0xFF03, 0xFEF8, 0xFEED, 0xFEE2, 0xFED7
 };
 
 const unsigned int GSL_LUTRowUpdate[] =
 {
-	0xFF84, 0xFF88, 0xFF8C, 0xFF90, 0xFF94, 0xFF98, 0xFF9C, 0xFFA0, 0xFFA4, 0xFFA8, 0xFFAC, 0xFFB0, 0xFFB4, 0xFFB8, 0xFFBC, 0xFFC0,
-	0xFFC4, 0xFFC8, 0xFFCC, 0xFFD0, 0xFFD4, 0xFFD8, 0xFFDC, 0xFFE0, 0xFFE4, 0xFFE8, 0xFFEC, 0xFFF0, 0xFFF4, 0xFFF8, 0xFFFC, 0x0000,
-	0xFFFC, 0xFFF8, 0xFFF4, 0xFFF0, 0xFFEC, 0xFFE8, 0xFFE4, 0xFFE0, 0xFFDC, 0xFFD8, 0xFFD4, 0xFFD0, 0xFFCC, 0xFFC8, 0xFFC4, 0xFFC0,
-	0xFFBC, 0xFFB8, 0xFFB4, 0xFFB0, 0xFFAC, 0xFFA8, 0xFFA4, 0xFFA0, 0xFF9C, 0xFF98, 0xFF94, 0xFF90, 0xFF8C, 0xFF88, 0xFF84, 0xFF80
+  0xFF84, 0xFF88, 0xFF8C, 0xFF90, 0xFF94, 0xFF98, 0xFF9C, 0xFFA0, 0xFFA4, 0xFFA8, 0xFFAC, 0xFFB0, 0xFFB4, 0xFFB8, 0xFFBC, 0xFFC0,
+  0xFFC4, 0xFFC8, 0xFFCC, 0xFFD0, 0xFFD4, 0xFFD8, 0xFFDC, 0xFFE0, 0xFFE4, 0xFFE8, 0xFFEC, 0xFFF0, 0xFFF4, 0xFFF8, 0xFFFC, 0x0000,
+  0xFFFC, 0xFFF8, 0xFFF4, 0xFFF0, 0xFFEC, 0xFFE8, 0xFFE4, 0xFFE0, 0xFFDC, 0xFFD8, 0xFFD4, 0xFFD0, 0xFFCC, 0xFFC8, 0xFFC4, 0xFFC0,
+  0xFFBC, 0xFFB8, 0xFFB4, 0xFFB0, 0xFFAC, 0xFFA8, 0xFFA4, 0xFFA0, 0xFF9C, 0xFF98, 0xFF94, 0xFF90, 0xFF8C, 0xFF88, 0xFF84, 0xFF80
 };
