@@ -11,7 +11,7 @@ A demonstration on the use of the library can be found in the c\examples folder.
 
 ### Documentation of Public Calls ###
 
-**void GSL_initializeMap(void *scrolltable, void *metatiles)**
+**void GSL_initializeMap(void * scrolltable, void * metatiles)**
 Initalizes the engine using the provided scrolltable and metatiles
 
 **void GSL_positionWindow(unsigned int X, unsigned int Y)**
