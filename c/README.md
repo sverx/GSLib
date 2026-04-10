@@ -20,7 +20,7 @@ Sets position of screen to (x,y) for initial use
 **void GSL_refreshVDP()**
 updates the entire screen for initial use or after a GSL_positionWindow() call.
 
-**unsigned int * GSL_metatileLookup(unsigned int x, unsigned int y)**
+**unsigned char * GSL_metatileLookup(unsigned int x, unsigned int y)**
 returns pointer to the metatile located at position (x,y) in scrolltable.
 
 **void GSL_tileLookup(unsigned int x, unsigned int y)**

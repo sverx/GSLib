@@ -2,7 +2,7 @@
 
 void GSL_initializeMap(void *scrolltable, void *metatiles) __sdcccall(0);
 void GSL_positionWindow(unsigned int X, unsigned int Y) __sdcccall(0);
-unsigned int * GSL_metatileLookup(unsigned int x, unsigned int y) __sdcccall(0);
+unsigned char * GSL_metatileLookup(unsigned int x, unsigned int y) __sdcccall(0);
 unsigned int GSL_tileLookup(unsigned int x, unsigned int y) __sdcccall(0);
 void GSL_refreshVDP();
 void GSL_scroll(signed char x, signed char y) __sdcccall(0);

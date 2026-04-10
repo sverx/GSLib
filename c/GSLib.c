@@ -70,7 +70,7 @@ __endasm;
 
 
 
-unsigned int * GSL_metatileLookup(unsigned int x, unsigned int y) __sdcccall(0)
+unsigned char * GSL_metatileLookup(unsigned int x, unsigned int y) __sdcccall(0)
 {
 __asm
               pop de
